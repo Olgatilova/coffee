@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ru">
-  <head>
+  <head> <!--из бустрапа копируем начальный шаблон страницы-->
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,7 +15,7 @@
 <div class="container">
       <div class="row coffee-machine">
         <div class="col-6 coffee-list">
-          <div class="row flex-column p-3">
+          <div class="row flex-column p-3 h-100 justify-content-around"> 
             <div class="coffee-item col">
               <img src="img/americano.png" alt="">
               <span>Американо - 50 руб.</span>
@@ -39,12 +39,27 @@
             <div class="col-6">
               <div class="display"> 
                 <p class="display-text">Выбирите кофе</p>
-                <div class="progress"> <!--анимация выполнения-->
+                <div class="progress"> <!-- скачать из бустрапа анимация выполнения-->
                   <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
                 </div>
               </div>
+              <div class="coffee-cup"> <!-- картинка кружки под дисплей-->
+                <img src="img/americano.png" alt="Американо"> <!--alt при отсутствии картинки выводит слово-->
+              </div>
             </div>
-            <div class="col-6"></div>
+            <div class="col-6">
+              <div class="input-group mb-3"><!-- приемник для купюр, из бустрапа компоненты, группа ввода-->
+                <input type="text" class="form-control" placeholder="Баланс">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">&#8381</span>
+                </div>
+              </div>
+              <div class="atm"> <!--купюроприемник-->
+                <img src="img/bill_acc.png" alt="">
+              </div>
+              <button class="btn btn-primary btn-block mt-2">Сдача</button> <!-- кнопка сдача, форма, цвет, блочный элемент, отступ от купюроприемника-->
+              <div class="change-box"></div>
+            </div>
           </div>
         </div>
       </div>

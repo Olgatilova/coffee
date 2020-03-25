@@ -9,6 +9,7 @@
 }    
 
 .coffee-item {
+  max-height: 75px;
   background: rgba(0, 0, 0,0.7);
   margin: 10px 0;
   border-radius: calc(75px / 2);
@@ -38,8 +39,23 @@
   background: lightgreen; /*цвет коемки*/
   border: 3px solid darkgreen;
   padding: 10px;/* внутренний отступ*/
+  margin-bottom: 30px; /* отступ от низа дисплей кружка сдвинулась вниз */
 }
 
+.coffee-cup img { /* картинка кружки под дисплей*/
+  width: 100%; /* размер кружки*/
+}
+
+.atm img { 
+  width: 100%; /* ширина купюроприемника*/
+}
+
+.change-box { /*выдача сдачи*/
+  background: grey; /*цвет*/
+  border: 3px solid black;/* бордюр цвет*/
+  height: 100px; /* высота*/
+  margin-top: 15px; /* отступ сверху*/
+}
 
 
 
