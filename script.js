@@ -6,6 +6,16 @@ let progressBar = document.querySelector(".progress-bar");/* переменна�
 let coffeeCup = document.querySelector(".coffee-cup img");
 let coffeeStatus = "waiting"; //"cooking", "ready" статус кофе машины, ожидание, готовка, готов//
 
+coffeeCup.onclick = takeCoffee; // 1 вариант забрать кружку
+
+//coffeCup.addEventListener t("click", takeCoffee, buyCoffee, "Американо", 21); // второй вариант забрать кружку
+
+/*coffeCup.onclick = function() {
+ takeCoffee(this);*/
+ // забрать кружку
+
+
+
 function buyCoffee(name, cost, elem) {
   if (coffeeStatus != "waiting") { /* запрет на списание повторно при приготовлении*/
     return;
@@ -49,6 +59,18 @@ function cookCoffee(name, elem) {
       clearInterval(cookingInterval); /* шкала окончание*/
     }
   }, 100);
+}
+
+function takeCoffee() {
+  if (coffeeStatus != "ready") {
+    return;
+  }
+  coffeeStatus = "waiting";
+  coffeeCup.classList.add("d-none");
+  coffeeCup.style.cursor = "auto";
+  progressBar.style.width = "0%";
+  changeDisplayText("Выберите кофе");
+
 }
 
 function changeDisplayText(text) { /* функция к переменной let dispiyText = document.querySelector(".dispiy-text")- замена текста в окне Выбирите кофе*/
