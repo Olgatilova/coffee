@@ -61,14 +61,14 @@ function cookCoffee(name, elem) {
   }, 100);
 }
 
-function takeCoffee() {
+function takeCoffee() { // варит кофе
   if (coffeeStatus != "ready") {
     return;
   }
   coffeeStatus = "waiting";
-  coffeeCup.classList.add("d-none");
-  coffeeCup.style.cursor = "auto";
-  progressBar.style.width = "0%";
+  coffeeCup.classList.add("d-none"); // кружка исчезает при клик
+  coffeeCup.style.cursor = "auto"; 
+  progressBar.style.width = "0%"; // обнуляется при завершении
   changeDisplayText("Выберите кофе");
 
 }
@@ -78,3 +78,43 @@ function changeDisplayText(text) { /* функция к переменной let
   //displayText.innerText = "<span>"+text+"</span>"; свойство 
 
 }
+
+
+//------------------------------drag'n'Drop------------------------
+
+let bills = document.querySelectorAll(".wallet img"); //переменная  возвращает массив
+for(let i = 0; i < bills.length; i++) {
+  bills[i].onmousedown = takeMoney; // нажатие на купюру
+  // bills[i].onmousedown = () => {takeMoney()}; // нажатие на купюру
+  
+}
+
+function takeMoney(event) { //обьект эвент, event.clientX, event.clientY -положение курсора на экране
+  event.preventDefault(); // сбрасывает браузерные настройки (призрак купюры)
+  
+  let bill = this;
+  let billCost = bill.getAttribute("cost"); //значение атрибута cost из html
+
+  bill.style.position = "absolute"; //вывод купюр из дом дерева, для передвижения по экрану
+  bill.style.transform = "rotate(90deg)"; //поворот купюры 90 градусов по оси
+  
+  let billCoords = bill.getBoundingClientRect(); // координаты купюры
+  let billWidth = billCoords.width; //переменная выводит ширину 
+  let billHeight = billCoords.height;//переменная выводит высоту
+  
+  bill.style.top = event.clientY - billWidth/2 + "px"; // купюра по ширине и высоте, при нажатии встает по центру курсора
+  bill.style.left = event.clientX - billHeight/2 + "px";
+  
+  window.onmousemove = (event) => {
+      bill.style.top = event.clientY - billWidth/2 + "px"; // купюра летает 
+      bill.style.left = event.clientX - billHeight/2 + "px";
+  };
+    
+  bill.onmouseup = dropMoney;
+}
+
+function dropMoney() {
+  window.onmousemove = null; //отключается движение купюры при отпуске клавиши мыши
+}
+
+

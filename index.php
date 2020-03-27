@@ -64,6 +64,12 @@
         </div>
       </div>
     </div>
+    <div class="wallet">
+      <img src="img/50rub.jpg" alt="" cost="50"> <!--атрибут cost для распознания купюр-->
+      <img src="img/100rub.jpg" alt="" cost="100">
+      <img src="img/500rub.jpg" alt="" cost="500">
+      
+    </div>
 
     <!-- Optional JavaScript -->
     <script src="script.js"></script>
