@@ -115,6 +115,114 @@ function takeMoney(event) { //обьект эвент, event.clientX, event.clie
 
 function dropMoney() {
   window.onmousemove = null; //отключается движение купюры при отпуске клавиши мыши
+  
+  let bill = this;
+  let billCost = bill.getAttribute("cost"); //значение атрибута cost из html
+  
+  if (inAtm(bill)) {
+    balance.value = +balance.value + +billCost; //сумма купюры выводитьься в баланс
+    bill.remove(); //скрыть купюру
+  }
 }
+
+function inAtm(bill) { 
+  
+  let billCoord = bill.getBoundingClientRect();// определение координат купюры на купюроприемнике
+  let atm = document.querySelector(".atm");//нашли и обратились к купюроприемнику
+  let atmCoord = atm.getBoundingClientRect();
+  //координаты купюроприемника
+  
+  let billLeftTopCornerX = billCoord.x; //координаты верхнего левого угла купюры
+  let billLeftTopCornerY = billCoord.y;  //координаты верхнего левого угла купюры
+  
+  let billRightTopCornerX = billCoord.x + billCoord.width; //координаты верхнего правого угла купюры ширина
+  let billRightTopCornerY = billCoord.y; //координаты верхнего правого угла купюры высота
+  
+  
+  let atmLeftTopCornerX = atmCoord.x;//координаты верхнего левого угла купюроприемника по ширине
+  let atmLeftTopCornerY = atmCoord.y;//координаты верхнего левого угла купюроприемника по высоте
+  
+  let atmRightTopCornerX = atmCoord.x + atmCoord.width;//координаты верхнего правого угла купюроприемника по ширине + ширина купюроприемника
+  let atmRightTopCornerY = atmCoord.y;//координаты верхнего правого угла купюроприемника по высоте
+  
+  let atmLeftBottomCornerX = atmCoord.x;//координаты нижнего левого угла купюроприемника по ширине
+  let atmLeftBottomCornerY = atmCoord.y + atmCoord.height/3;//координаты нижнего нижнего угла купюроприемника по высоте + высота купюроприемника
+
+  let atmRightBottomCornerX = atmCoord.x + atmCoord.width;//координаты нижнего правого угла купюроприемника по ширине + ширина купюроприемника
+  let atmRightBottomCornerY = atmCoord.y + atmCoord.height/3;
+
+  
+ /* console.log([[billLeftTopCornerX, billLeftTopCornerY] , [billRightTopCornerX, billRightTopCornerY]], [[atmLeftBottomCornerX, atmLeftBottomCornerY], [atmRightBottomCornerX, atmRightBottomCornerY]]);
+  
+  console.log([billCoord, atmCoord]);*/
+  
+  if (
+    billLeftTopCornerX >= atmLeftTopCornerX //если левый верхний край купюры >= левому верхнему краю купюроприемника по ширине
+    && billLeftTopCornerY >= atmLeftTopCornerY //если левый верхний край купюры >= левому верхнему краю купюроприемника по высоте правда/ложь
+    && billRightTopCornerX <= atmRightTopCornerX //если правый верхний край купюры Б<= правого верхнему краю купюроприемника по ширине
+    && billRightTopCornerY >= atmRightTopCornerY //если правый верхний край купюры >= правому верхнему краю купюроприемника по высоте правда/ложь
+    && billLeftTopCornerX >= atmLeftBottomCornerX
+    && billLeftTopCornerY <= atmLeftBottomCornerY
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+}    
+  //---------------------------сдача-----------------------
+  
+  
+let changeBtn = document.querySelector(".change");
+changeBtn.onclick = takeChange;
+
+function takeChange() {
+  tossCoin("10");// монеты с 10
+}
+
+function tossCoin(cost) {  //сдача, привязка картинок
+  let changeContainer = document.querySelector(".change-box");
+  let changeContainerCoords = changeContainer.getBoundingClientRect();
+  let coinSrc = "";
+  
+  switch (cost) {
+    case "10":
+      coinSrc = "img/10rub.png";
+      break;
+    case "5":
+      coinSrc = "img/5rub.png";
+      break;
+    case "2":
+      coinSrc = "img/2rub.png";
+      break;
+    case "1":
+      coinSrc = "img/1rub.png";
+      break;
+
+  }
+  
+/*  changeContainer.innerHTML += `
+   <img src="${coinSrc}" style="height: 50px">  
+  ` //вывод картирки монеты в контейнере, ее размер как вариант += для еще
+*/
+  let coin = document.createElement("img");
+  coin.setAttribute("src", coinSrc);
+  coin.style.height = "50px"; // размер монеты
+  coin.style.cursor = "pointer"; 
+  coin.style.display = "inline-block";//перевод строчного элемента в строчно-блочный
+  coin.style.position = "absolute";// монеты кладутся друг на друга
+  
+  changeContainer.append(coin);// прикреплять после внутри элемента changeContainer.prepend(coin) - прикреплять до*/
+/*  changeContainer.after(coin); // после контейнера
+  changeContainer.before(coin); // перед контейнера
+  changeContainer.replace(coin); // заменяет элементы
+*/    
+ /* console.log(coinSrc);*/
+ coin.style.top = Math.round(Math.random() * (changeContainerCoords.height- 53)) + "px"; //монетки попадают в контейнер
+ coin.style.left = Math.round(Math.random() * (changeContainerCoords.width - 53)) + "px";
+ coin.onclick = () => coin.remove(); //убрать, скрыть монетки в контейнере
+ 
+ 
+}
+
 
 
