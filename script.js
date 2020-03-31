@@ -175,8 +175,41 @@ function inAtm(bill) {
 let changeBtn = document.querySelector(".change");
 changeBtn.onclick = takeChange;
 
-function takeChange() {
-  tossCoin("10");// монеты с 10
+function takeChange() { //выдача сдачи
+  
+  if (balance.value <= 0) { // запрет на выдачу сдачи, больше чем надо
+  changeBtn.onclick = takeChange; //нажатие сдача равно выдачи
+   return;
+  }
+  changeBtn.onclick = null; // снятие задачи нажатие кнопки
+  if (balance.value - 10 >= 0) { 
+    setTimeout(() => { // событие с задержкой , звук мелочи
+    tossCoin("10");
+    balance.value -= 10; //запрет выдачи сдачи в 10 если сумма сдачи меньше 10
+    return takeChange();
+    }, 300); // задержка звука
+    
+  } else if (balance.value - 5 >= 0) {
+    setTimeout(() => {
+    tossCoin("5");
+    balance.value -= 5;
+    return takeChange();
+    }, 300);
+    
+  } else if (balance.value - 2 >= 0) {
+    setTimeout(() => {
+    tossCoin("2");
+    balance.value -= 2;
+    return takeChange();
+    }, 300);
+
+  } else if (balance.value - 1 >= 0) {
+    setTimeout(() => {
+    tossCoin("1");
+    balance.value -= 1;
+    return takeChange();
+    }, 300);
+  }
 }
 
 function tossCoin(cost) {  //сдача, привязка картинок
@@ -210,17 +243,23 @@ function tossCoin(cost) {  //сдача, привязка картинок
   coin.style.cursor = "pointer"; 
   coin.style.display = "inline-block";//перевод строчного элемента в строчно-блочный
   coin.style.position = "absolute";// монеты кладутся друг на друга
-  
+   coin.style.userSelect = "none"; //отключение выделения монет при заборе сдачи
+   
   changeContainer.append(coin);// прикреплять после внутри элемента changeContainer.prepend(coin) - прикреплять до*/
 /*  changeContainer.after(coin); // после контейнера
   changeContainer.before(coin); // перед контейнера
   changeContainer.replace(coin); // заменяет элементы
 */    
  /* console.log(coinSrc);*/
- coin.style.top = Math.round(Math.random() * (changeContainerCoords.height- 53)) + "px"; //монетки попадают в контейнер
- coin.style.left = Math.round(Math.random() * (changeContainerCoords.width - 53)) + "px";
- coin.onclick = () => coin.remove(); //убрать, скрыть монетки в контейнере
+  coin.style.top = Math.round(Math.random() * (changeContainerCoords.height- 53)) + "px"; //монетки попадают в контейнер
+  coin.style.left = Math.round(Math.random() * (changeContainerCoords.width - 53)) + "px";
+  coin.onclick = () => coin.remove(); //повесить событие убрать, скрыть монетки в контейнере
  
+ 
+  let coinSound = new Audio("sound/condrop.mp3");//проиграй звук мелочи
+   //coinSound.src = "sound/coindrop.mp3"
+  coinSound.play();
+
  
 }
 
